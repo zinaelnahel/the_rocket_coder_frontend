@@ -34,18 +34,6 @@ export const quiz1 = {
       point: "20",
     },
     {
-      question: "ReactJS is an MVC based framework?",
-      questionType: "text",
-      answerSelectionType: "single",
-      answers: ["True", "False"],
-      correctAnswer: "2",
-      messageForCorrectAnswer: "Correct answer. Good job.",
-      messageForIncorrectAnswer: "Incorrect answer. ",
-      explanation:
-        "React isn't an MVC framework. React is a library for building composable user interfaces. It encourages the creation of reusable UI components which present data that changes over time.",
-      point: "20",
-    },
-    {
       question: "Which of the following concepts is/are key to ReactJS?",
       questionType: "text",
       answerSelectionType: "single",
@@ -140,12 +128,17 @@ export const quiz1 = {
         "Elements are the smallest building blocks of React apps. An element describes what you want to see on the screen: const element = <h1>Hello, world</h1>; Unlike browser DOM elements, React elements are plain objects, and are cheap to create.",
       point: "20",
     },
-       {
+    {
       question: "What is Babel?",
       questionType: "text",
       // if you need to display Picture in Question
       answerSelectionType: "single",
-      answers: ["A transpiler", "An interpreter", "A Compiler", "Both Compiler and Transpilar"],
+      answers: [
+        "A transpiler",
+        "An interpreter",
+        "A Compiler",
+        "Both Compiler and Transpilar",
+      ],
       correctAnswer: "4",
       messageForCorrectAnswer: "Correct answer. Good job.",
       messageForIncorrectAnswer: "Incorrect answer.",
@@ -153,12 +146,16 @@ export const quiz1 = {
         "A transpiler is a compiler like program, which convert ES6 JavaScript code to ES5 JavaScript code so that it can run in browsers. ",
       point: "20",
     },
-     {
+    {
       question: "What does the webpack command do?",
       questionType: "text",
       // if you need to display Picture in Question
       answerSelectionType: "single",
-      answers: ["Transpiles all the Javascript down into one file", "Runs react local development server.", "A module bundler"],
+      answers: [
+        "Transpiles all the Javascript down into one file",
+        "Runs react local development server.",
+        "A module bundler",
+      ],
       correctAnswer: "3",
       messageForCorrectAnswer: "Correct answer. Good job.",
       messageForIncorrectAnswer: "Incorrect answer.",
@@ -166,7 +163,7 @@ export const quiz1 = {
         "Webpack is a static module bundler for JavaScript applications — it takes all the code from your application and makes it usable in a web browser. ",
       point: "20",
     },
-     {
+    {
       question: "ReactJS uses _____ to increase performance",
       questionType: "text",
       answerSelectionType: "single",
@@ -178,35 +175,50 @@ export const quiz1 = {
         "In simple words, virtual DOM is just a copy of the original DOM kept in the memory and synced with the real DOM by libraries such as ReactDOM.  ",
       point: "20",
     },
-     {
-      question: "Which of the following is true about variable naming conventions in JavaScript?",
+    {
+      question:
+        "Which of the following is true about variable naming conventions in JavaScript?",
       questionType: "text",
       answerSelectionType: "single",
-      answers: ["You should not use any of the JavaScript reserved keyword as variable name.", "JavaScript variable names should not start with a numeral (0-9).", "Both of the above.", "None of above"],
+      answers: [
+        "You should not use any of the JavaScript reserved keyword as variable name.",
+        "JavaScript variable names should not start with a numeral (0-9).",
+        "Both of the above.",
+        "None of above",
+      ],
       correctAnswer: "3",
       messageForCorrectAnswer: "Correct answer. Good job.",
       messageForIncorrectAnswer: "Incorrect answer.",
-      explanation:
-        "Both of the above options are correct. ",
+      explanation: "Both of the above options are correct. ",
       point: "20",
     },
-       {
-      question: "Which of the following is a valid type of function javascript supports?",
+    {
+      question:
+        "Which of the following is a valid type of function javascript supports?",
       questionType: "text",
       answerSelectionType: "single",
-      answers: ["named function", "anonymous function", "Both of the above.", "None of above"],
+      answers: [
+        "named function",
+        "anonymous function",
+        "Both of the above.",
+        "None of above",
+      ],
       correctAnswer: "3",
       messageForCorrectAnswer: "Correct answer. Good job.",
       messageForIncorrectAnswer: "Incorrect answer.",
-      explanation:
-        "A function in JavaScript can be either named or anonymous.",
+      explanation: "A function in JavaScript can be either named or anonymous.",
       point: "20",
     },
-         {
+    {
       question: "Which of the following is correct about callbacks?",
       questionType: "text",
       answerSelectionType: "single",
-      answers: [" A callback is a plain JavaScript function passed to some method as an argument or option.", "Some callbacks are just events, called to give the user a chance to react when a certain state is triggered.", " Both of the above.", "None of above"],
+      answers: [
+        " A callback is a plain JavaScript function passed to some method as an argument or option.",
+        "Some callbacks are just events, called to give the user a chance to react when a certain state is triggered.",
+        " Both of the above.",
+        "None of above",
+      ],
       correctAnswer: "3",
       messageForCorrectAnswer: "Correct answer. Good job.",
       messageForIncorrectAnswer: "Incorrect answer.",
@@ -214,32 +226,37 @@ export const quiz1 = {
         "A callback is a plain JavaScript function passed to some method as an argument or option. Some callbacks are just events, called to give the user a chance to react when a certain state is triggered.",
       point: "20",
     },
-       {
+    {
       question: "Which built-in method sorts the elements of an array?",
       questionType: "text",
       answerSelectionType: "single",
-      answers: ["changeOrder(order)", "order()", " sort()", "None of the above."],
+      answers: [
+        "changeOrder(order)",
+        "order()",
+        " sort()",
+        "None of the above.",
+      ],
       correctAnswer: "3",
       messageForCorrectAnswer: "Correct answer. Good job.",
       messageForIncorrectAnswer: "Incorrect answer.",
-      explanation:
-        "sort() method sorts the elements of an array.",
+      explanation: "sort() method sorts the elements of an array.",
       point: "20",
     },
-      {
-      question: "Which of the following function of Number object returns the number's value?",
+    {
+      question:
+        "Which of the following function of Number object returns the number's value?",
       questionType: "text",
       answerSelectionType: "single",
       answers: ["toString()", "valueOf()", "toLocaleString()", "toPrecision()"],
       correctAnswer: "2",
       messageForCorrectAnswer: "Correct answer. Good job.",
       messageForIncorrectAnswer: "Incorrect answer.",
-      explanation:
-        "valueOf() − Returns the number's value.",
+      explanation: "valueOf() − Returns the number's value.",
       point: "20",
     },
-     {
-      question: "Which of the following function of String object extracts a section of a string and returns a new string?",
+    {
+      question:
+        "Which of the following function of String object extracts a section of a string and returns a new string?",
       questionType: "text",
       answerSelectionType: "single",
       answers: ["slice()", "split()", "replace()", "search()"],
@@ -250,11 +267,17 @@ export const quiz1 = {
         "slice() − Extracts a section of a string and returns a new string.",
       point: "20",
     },
-       {
-      question: "Which of the following function of String object returns the calling string value converted to upper case while respecting the current locale?",
+    {
+      question:
+        "Which of the following function of String object returns the calling string value converted to upper case while respecting the current locale?",
       questionType: "text",
       answerSelectionType: "single",
-      answers: ["toLocaleUpperCase()", "toUpperCase()", "toString()", "substring()"],
+      answers: [
+        "toLocaleUpperCase()",
+        "toUpperCase()",
+        "toString()",
+        "substring()",
+      ],
       correctAnswer: "1",
       messageForCorrectAnswer: "Correct answer. Good job.",
       messageForIncorrectAnswer: "Incorrect answer.",
@@ -262,8 +285,9 @@ export const quiz1 = {
         "toLocaleUpperCase() − Returns the calling string value converted to upper case while respecting the current locale.",
       point: "20",
     },
-           {
-      question: " Which of the following function of Array object removes the last element from an array and returns that element?",
+    {
+      question:
+        " Which of the following function of Array object removes the last element from an array and returns that element?",
       questionType: "text",
       answerSelectionType: "single",
       answers: ["pop()", "push()", "join()", "map()"],
