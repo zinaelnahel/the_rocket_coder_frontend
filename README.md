@@ -54,7 +54,7 @@ The debugger uses the browser's SpeechRecognition service, not a separate transc
 - Automated tests simulate speech-service events and failure modes. They do not verify real microphone transcription on physical devices.
 - In Edge on Windows, device dictation is a fallback: click the explanation field and press **Windows + H**. The app cannot enable the operating system's dictation itself. Browser voice recognition may still be unavailable even when Edge exposes the API; the app now displays the reported failure rather than claiming it is listening.
 
-Production site: https://gregarious-cranachan-ab190b.netlify.app
+Production site: https://rocketcoder.netlify.app/
 
 ## Responsive layout checks
 
