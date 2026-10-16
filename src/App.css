@@ -257,3 +257,9 @@ input::placeholder, textarea::placeholder {color: #b4a2c3;}
 @media (max-width: 800px) {.radio-container {padding: 0 24px 40px;} .ambient-player {flex-wrap: wrap; gap: 18px;} .radio-disc {width: 64px; height: 64px;} .radio-description {flex-basis: calc(100% - 90px);} .radio-controls {width: 100%;} }
 @media (max-width: 420px) {.radio-container {padding-inline: 16px;} .ambient-player {padding: 20px 16px;} .radio-description h2 {font-size: 1.2rem;} .radio-description .eyebrow {font-size: .5rem;} }
 @media (prefers-reduced-motion: reduce) {.is-playing .radio-disc {animation: none;}}
+.voice-input {margin-top: 20px; border-top: 1px solid var(--border); padding-top: 20px;}
+.voice-controls {display: flex; align-items: flex-end; flex-wrap: wrap; gap: 16px;}
+.voice-controls label {margin: 0; flex: 1; min-width: 130px; font-size: .75rem;}
+.voice-controls select {margin: 6px 0 0; padding: 8px 12px; min-height: 44px;}
+.voice-input > p {margin: 14px 0 0; font-size: .8rem;}
+.voice-preview {border-left: 2px solid var(--accent); padding-left: 12px; color: #e8d5fa; overflow-wrap: anywhere;}
