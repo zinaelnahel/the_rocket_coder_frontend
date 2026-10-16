@@ -2,7 +2,17 @@
 // AudioBufferSourceNode handles timing, including when browser timers are throttled.
 import {createAudioLayers} from './audioLayers';
 
+export function requestPlaybackSession() {
+  // iOS otherwise treats Web Audio as ambient sound, which obeys Silent Mode.
+  try {
+    if (navigator.audioSession) navigator.audioSession.type = 'playback';
+  } catch {
+    // Older browsers can expose a partial API; ordinary playback still works.
+  }
+}
+
 export function createAmbientAudio(Context) {
+  requestPlaybackSession();
   const context = new Context();
   const master = context.createGain();
   master.gain.value = 0;
@@ -92,7 +102,12 @@ export function createAmbientAudio(Context) {
   let closed = false;
   return {
     context,
-    async play(volume) {await context.resume(); master.gain.setTargetAtTime(volume, context.currentTime, 0.15);},
+    async play(volume) {
+      requestPlaybackSession();
+      await context.resume();
+      if (context.state !== 'running') throw new Error('Audio is not running');
+      master.gain.setTargetAtTime(volume, context.currentTime, 0.15);
+    },
     async pause() {await context.suspend();},
     setVolume(volume) {master.gain.setTargetAtTime(volume, context.currentTime, 0.15);},
     setMix(mix) {music.gain.setTargetAtTime(Math.max(0, Math.min(1, mix.music)), context.currentTime, 0.2); layers.setMix(mix);},
