@@ -263,3 +263,31 @@ input::placeholder, textarea::placeholder {color: #b4a2c3;}
 .voice-controls select {margin: 6px 0 0; padding: 8px 12px; min-height: 44px;}
 .voice-input > p {margin: 14px 0 0; font-size: .8rem;}
 .voice-preview {border-left: 2px solid var(--accent); padding-left: 12px; color: #e8d5fa; overflow-wrap: anywhere;}
+.daily-quote {margin-top: 30px;}
+.daily-quote blockquote {margin-top: 0; overflow-wrap: anywhere;}
+.quote-refresh {font: .7rem ui-monospace, monospace; color: #d6f47c; padding-left: 16px;}
+.quote-offline {font-size: .7rem; color: var(--muted); margin: 0 0 0 16px;}
+.mission-help {font-size: .78rem; color: #665171; margin: 14px 0 0;}
+.task-row {flex-wrap: wrap;}
+.task-text {min-width: 90px;}
+.tasks-panel .mission-launch {margin-left: auto; font-size: .7rem; padding: 8px 11px; background: #c9a6f0; border-color: #77618a; color: #30233e;}
+.mission-control {background: #3a2b4c; border: 1px solid #8a6ba2; border-radius: 18px 18px 6px 18px; padding: 24px; margin: 0 0 28px; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: center; max-width: 960px;}
+.mission-control .eyebrow {font-size: .6rem; margin-bottom: 10px;}
+.mission-control h2 {font-size: 1.4rem; overflow-wrap: anywhere; margin-bottom: 10px;}
+.mission-control p:not(.eyebrow) {color: #d0bddf; font-size: .8rem; margin: 0;}
+.mission-controls select {margin-bottom: 10px;}
+.mission-controls label {margin-bottom: 0;}
+.mission-controls button {width: 100%; font-size: .8rem;}
+.ambient-player {flex-wrap: wrap;}
+.audio-mixer {flex-basis: 100%; min-width: 0; border-top: 1px solid #775b8f; padding-top: 24px; margin-top: 4px;}
+.audio-mixer h3 {margin: 0; font-size: 1rem; color: #f6e9ff;}
+.audio-mixer .panel-heading > span {font: .55rem ui-monospace, monospace; letter-spacing: .08em;}
+.mixer-layers {display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; margin: 20px 0;}
+.mixer-channel > span {display: flex; align-items: center; gap: 7px; font-size: .75rem;}
+.mixer-channel .mix-level {margin-left: auto; font: .65rem ui-monospace, monospace; color: #d6f47c;}
+.mixer-channel input {width: 100%; min-height: 40px; margin: 5px 0 0;}
+.mixer-presets {display: flex; flex-wrap: wrap; gap: 9px;}
+.mixer-presets button {font-size: .72rem; padding: 8px 13px; min-height: 44px;}
+.mixer-note {font-size: .68rem; color: #c3afd2; margin: 15px 0 0;}
+@media (max-width: 800px) {.mixer-layers {grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 24px;} .mission-control {grid-template-columns: 1fr; gap: 20px;}}
+@media (max-width: 420px) {.mission-control {padding: 20px 16px;} .mixer-layers {grid-template-columns: 1fr; gap: 0;} .audio-mixer .panel-heading {flex-direction: column; gap: 8px;} .task-row .task-text {flex-basis: calc(100% - 135px);} .tasks-panel .mission-launch {margin-left: 30px;} }

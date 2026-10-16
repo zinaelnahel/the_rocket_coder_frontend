@@ -1,0 +1,42 @@
+.home-extras {display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-top: 50px; align-items: flex-start;}
+.transmission {border: 2px solid #2b203d; background: #f2d582; color: #30233e; border-radius: 8px 24px 24px 24px; padding: 26px; transform: rotate(1deg); box-shadow: 5px 5px 0 #140e24;}
+.transmission .eyebrow {color: #503448; font-size: .6rem; margin: 0;}
+.transmission .panel-heading {align-items: center;}
+.transmission .text-button {color: #503448;}
+.transmission .text-button:hover {color: #30233e; background: #30233e10;}
+.transmission-type {font: .6rem ui-monospace, monospace; color: #614451;}
+.transmission p:not(.eyebrow) {font-family: Georgia, serif; font-size: 1.25rem; line-height: 1.6; margin: 12px 0;}
+.transmission :focus-visible {outline-color: #614451;}
+.transmission-open {align-self: flex-start;}
+.log-layout {display: grid; grid-template-columns: 1fr 1fr; gap: 28px; align-items: flex-start;}
+.log-form label {margin-top: 20px;}
+.log-form textarea {margin-top: 7px; font-size: 1rem;}
+.log-entry {border-top: 1px solid var(--border); margin-top: 24px; padding-top: 24px;}
+.log-entry .eyebrow {font-size: .65rem;}
+.log-entry h3 {font-size: .8rem; color: #d6f47c; margin-bottom: 5px;}
+.log-entry p:not(.eyebrow) {white-space: pre-wrap; overflow-wrap: anywhere; font-size: .9rem; color: #dacbe3;}
+.log-entry .button-row {justify-content: flex-start;}
+.mission-tabs {display: flex; flex-wrap: wrap; gap: 10px; margin: 25px 0;}
+.mission-tabs button {font-size: .8rem;}
+.debugging-mission {max-width: 850px;}
+.debugging-mission pre {background: #171122; border: 1px solid #6c5685; border-radius: 10px; padding: 20px; color: #e7d8f7; white-space: pre-wrap; overflow-wrap: anywhere; font: .85rem/1.8 ui-monospace, monospace; margin: 24px 0;}
+.debugging-mission fieldset {border: 0; padding: 0; margin: 0 0 20px;}
+.debugging-mission legend {margin-bottom: 14px; font-size: 1rem;}
+.debugging-mission .button-row {justify-content: flex-start;}
+.debugging-mission .eyebrow {font-size: .6rem; margin: 0;}
+.mission-hint {background: #d6f47c10; padding: 16px; border-left: 2px solid #d6f47c; font-size: .9rem;}
+.mission-solution {border-top: 1px solid var(--border); margin: 26px 0; padding-top: 26px;}
+.mission-solution p {font-size: .9rem; color: var(--muted);}
+.inline-button {display: inline-block; text-decoration: none; border: 1px solid #967ab2; border-radius: 10px; padding: 12px 18px; font-size: .85rem; color: #ecdafa;}
+@media (max-width: 1200px) {.header-inner {flex-wrap: wrap;} .menu-toggle {display: block; background: transparent; color: #e9d4ff; border: 1px solid #85669e; border-radius: 20px;} .main-nav {display: none; flex-basis: 100%;} .main-nav.open {display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 8px;} .main-nav a {font-size: .85rem; padding: 12px;}}
+@media (max-width: 800px) {.home-extras,.log-layout {grid-template-columns: minmax(0,1fr);} .main-nav.open {grid-template-columns: repeat(2,minmax(0,1fr));} .transmission {transform: none;} .home-extras {margin-top: 35px;}}
+@media (max-width: 420px) {.transmission {padding: 22px 16px;} .mission-tabs {display: grid; grid-template-columns: 1fr;} .mission-tabs button {text-align: left;} .debugging-mission pre {padding: 14px 12px; font-size: .75rem;}}
+.practice-options {display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 24px; max-width: 900px;}
+.practice-option {text-decoration: none; display: flex; flex-direction: column; gap: 12px;}
+.practice-option .tool-icon {position: static; font-size: 2rem; color: #d6f47c; margin: 0; transform: none;}
+.practice-option h2 {margin: 0; font-size: 1.5rem;}
+.practice-option p {color: var(--muted); font-size: .95rem;}
+.practice-option .tool-link {color: #d6f47c; margin-top: auto;}
+.practice-option:hover {border-color: #d6f47c;}
+.site-footer {flex-wrap: wrap;}
+@media (max-width: 800px) {.practice-options {grid-template-columns: 1fr;}}

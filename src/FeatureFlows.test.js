@@ -4,6 +4,7 @@ import Quiz from './Components/RoboCodingQuiz';
 import Debugger from './Components/AlienDebugger';
 import Player from './Components/AmbientPlayer';
 import Credits from './Components/Credits';
+import {MemoryRouter} from 'react-router-dom';
 
 test('quiz supports multiple answers, feedback and completion without reloading', () => {
   render(<Quiz />);
@@ -28,7 +29,7 @@ test('quiz supports multiple answers, feedback and completion without reloading'
 });
 
 test('debugger provides typed guidance and safely encoded external search links', () => {
-  render(<Debugger />);
+  render(<MemoryRouter><Debugger /></MemoryRouter>);
   fireEvent.change(screen.getByLabelText('Explain your coding problem'), {target: {value: 'React effect & state?'}});
   fireEvent.click(screen.getByRole('button', {name: 'Help me think'}));
   expect(screen.getByRole('link', {name: /Search Stack Overflow/})).toHaveAttribute('href', 'https://stackoverflow.com/search?q=React%20effect%20%26%20state%3F');
