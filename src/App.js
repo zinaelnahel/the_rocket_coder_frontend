@@ -1,104 +1,20 @@
-import "./App.css";
-import { useState, useEffect } from "react";
-import { usePosition } from "use-position";
-import useNasaPicture from "./useNasaPicture";
-import SwipeableTemporaryDrawer from "./Components/SwipeableTemporaryDrawer";
-import React from "react";
-import Home from "./Components/Home";
-// import CustomReactWeather from "./CustomReactWeather";
-import { Switch, Route } from "react-router-dom";
-import AlienDebugger from "./Components/AlienDebugger";
-import DiscoverEvents from "./Components/DiscoverEvents";
-import FocusTimer from "./Components/FocusTimer";
-import RoboCodingQuiz from "./Components/RoboCodingQuiz";
-import ShortcutsGenerator from "./Components/ShortcutsGenerator";
-import Credits from "./Components/Credits";
+import React, {useEffect} from 'react';
+import {Switch, Route, useLocation} from 'react-router-dom';
+import './App.css';
+import AmbientPlayer from './Components/AmbientPlayer';
+import Navigation from './Components/SwipeableTemporaryDrawer';
+import Home from './Components/Home';
+import AlienDebugger from './Components/AlienDebugger';
+import FocusTimer from './Components/FocusTimer';
+import RoboCodingQuiz from './Components/RoboCodingQuiz';
+import ShortcutsGenerator from './Components/ShortcutsGenerator';
+import Credits from './Components/Credits';
 
-// import Paper from "@material-ui/core/Paper";
-
-function App() {
-  const [weatherData, setWeatherData] = useState();
-  const { picOfTheDay } = useNasaPicture();
-
-  const { latitude, longitude } = usePosition();
-
-  const [checked, setChecked] = useState(false);
-
-  const handleChangeMusic = () => {
-    setChecked((prev) => !prev);
-  };
-
-  // useEffect(() => {
-  //   if (latitude && longitude) {
-  //     const url = `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`;
-
-  //     fetch(url)
-  //       .then((response) => response.json())
-  //       .then((data) => {
-  //         setLocation(data);
-  //         console.log({ data });
-  //       });
-  //   }
-  // }, [longitude, latitude]);
-
-  // const images = images.map((image) =>
+export default function App() {
+  const {pathname} = useLocation();
   useEffect(() => {
-    if (latitude && longitude) {
-      const iconUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=c97c5e5eec64ede6eb6cc5552280d0c3&units=metric`;
-      fetch(iconUrl)
-        .then((response) => response.json())
-        .then((data) => {
-          setWeatherData({
-            icon: data.weather[0].icon,
-            city: data.name,
-            temperature: data.main.temp,
-            latitude: data.coord.lat,
-            longitude: data.coord.lon,
-          });
-          console.log(data);
-        });
-    }
-  }, [longitude, latitude]);
-
-  console.log(picOfTheDay);
-  return (
-    <div className="App">
-      <SwipeableTemporaryDrawer />
-      <Switch>
-        <Route path="/discoverevents">
-          <DiscoverEvents />
-        </Route>
-        <Route path="/focustimer/">
-          <FocusTimer
-            weatherData={weatherData}
-            latitude={latitude}
-            longitude={longitude}
-          />
-        </Route>
-        <Route path="/robocodingquiz/">
-          <RoboCodingQuiz />
-        </Route>
-        <Route path="/shortcutsgenerator/">
-          <ShortcutsGenerator />
-        </Route>
-        <Route path="/aliendebugger">
-          <AlienDebugger />
-        </Route>
-        <Route path="/credits/">
-          <Credits />
-        </Route>
-        <Route path="/">
-          <Home
-            picOfTheDay={picOfTheDay}
-            weatherData={weatherData}
-            checked={checked}
-            handleChangeMusic={handleChangeMusic}
-            // location={location}
-          />
-        </Route>
-      </Switch>
-    </div>
-  );
+    document.title = 'The Rocket Coder · Your coding launchpad';
+    document.getElementById('main-content')?.focus({preventScroll: true});
+  }, [pathname]);
+  return <div className="App"><a href="#main-content" className="skip-link">Skip to content</a><Navigation /><main id="main-content" tabIndex={-1}><Switch><Route exact path="/"><Home /></Route><Route path="/focustimer"><FocusTimer /></Route><Route path="/aliendebugger"><AlienDebugger /></Route><Route path="/robocodingquiz"><RoboCodingQuiz /></Route><Route path="/shortcutsgenerator"><ShortcutsGenerator /></Route><Route path="/credits"><Credits /></Route><Route><section className="tool-page"><h1>Lost in space?</h1><p>Choose a tool from the navigation to get back on course.</p></section></Route></Switch></main><div className="radio-container"><AmbientPlayer /></div><footer className="site-footer"><span>Made for curious minds &amp; small daily wins.</span><span>THE ROCKET CODER <span className="accent">✦</span></span></footer></div>;
 }
-
-export default App;

@@ -52,9 +52,10 @@
     "weather-view": "^0.2.1",
     "web-vitals": "^1.1.2"
   },
+  "engines": {"node": "22.x"},
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "node --openssl-legacy-provider node_modules/react-scripts/scripts/start.js",
+    "build": "node --openssl-legacy-provider node_modules/react-scripts/scripts/build.js",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -63,6 +64,9 @@
       "react-app",
       "react-app/jest"
     ]
+  },
+  "jest": {
+    "testMatch": ["**/src/**/*.test.js"]
   },
   "browserslist": {
     "production": [

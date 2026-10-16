@@ -1,144 +1,24 @@
-import React, { useState, useEffect } from "react";
-import Input from "@material-ui/core/Input";
-import IconButton from "@material-ui/core/IconButton";
-import { useStyles } from "./MainBodyStyles";
-import AddIcon from "@material-ui/icons/Add";
-import List from "@material-ui/core/List";
-import { nanoid } from "nanoid";
-import { Scrollbars } from "react-custom-scrollbars";
-import Task from "./Task";
+import React, {useState} from 'react';
+import Task from './Task';
+import useStoredList from '../useStoredList';
 
-const { REACT_APP_NAMESPACE } = process.env;
-const localStorageTaskNameSpace = `${REACT_APP_NAMESPACE}-tasks`;
-
-const ToDo = () => {
-  const classes = useStyles();
-  const [tasks, setTasks] = useState([]);
-
-  useEffect(() => {
-    if (tasks.length) {
-      localStorage.setItem(localStorageTaskNameSpace, JSON.stringify(tasks));
-    }
-  }, [tasks]);
-
-  useEffect(() => {
-    const json = localStorage.getItem(localStorageTaskNameSpace);
-    const savedTasks = JSON.parse(json);
-    if (savedTasks) {
-      setTasks(savedTasks);
-    }
-  }, []);
-
-  console.log(tasks);
-  const renderThumb = () => {
-    const thumbStyle = {
-      backgroundColor: "white",
-      width: "1px",
-    };
-    return <div style={{ ...thumbStyle }} />;
-  };
-
-  // function to sort the order of the items in the list
-  const compare = (a, b) => {
-    if (a.createdAt > b.createdAt) return -1;
-    if (b.createdAt > a.createdAt) return 1;
-    return 0;
-  };
-  // function to add tasks
-  const addNewTaskToList = (e) => {
-    e.preventDefault();
-    const newTask = {
-      id: nanoid(),
-      text: e.currentTarget.taskInput.value,
-      checked: false,
-      editing: false,
-      createdAt: Date.now(),
-    };
-    setTasks(tasks ? [...tasks, newTask] : newTask);
-    e.currentTarget.taskInput.value = "";
-  };
-
-  // function to toggle taskChecked property of clicked task based on id
-  const toggleCheck = (id) => {
-    const toggledtasks = tasks.map((task) => {
-      if (task.id === id) {
-        task.checked = !task.checked;
-      }
-      return task;
-    });
-    setTasks(toggledtasks);
-  };
-
-  // function to delete clicked task
-  const deleteTask = (id) => {
-    // updates state with all filtered tasks but the one we are clicking on(identified by id)
-    const filteredtasks = tasks.filter((task) => id !== task.id);
-    setTasks(filteredtasks);
-  };
-
-  // function to edit text
-  const editTask = (id) => {
-    // find the task we want to edit when we click on the edit button by the id and make it's editing prop to true
-    const targetTask = tasks.find((task) => task.id === id);
-    targetTask.editing = true;
-    /*overwrite the state by inserting all the tasks that match the filter(i.e the tasks that are not the one we are editing)
-     and the one we are editing separately (targetTask)*/
-    setTasks([...tasks.filter((task) => task.id !== id), targetTask]);
-  };
-
-  /*After we edited and click outside(onBlur), we set the editing property
-      back to false(i.e.contentEditable prop in the child = to false),
-      then we subsitute the taskText property of that task with event.target.innerText and reupdate the state*/
-  const finishEditingTask = (e, id) => {
-    const targetTask = tasks.find((task) => task.id === id);
-    targetTask.text = e.target.innerText;
-    targetTask.editing = false;
-
-    console.log({ target: e.target });
-    setTasks([...tasks.filter((task) => task.id !== id), targetTask]);
-  };
-
-  return (
-    <>
-      <form onSubmit={addNewTaskToList}>
-        <Input
-          style={{ color: "white", marginTop: "2.5rem" }}
-          className={classes.root}
-          aria-describedby="todays-tasks"
-          name="taskInput"
-        />
-
-        <IconButton aria-label="add" type="submit">
-          <AddIcon style={{ color: "white", cursor: "pointer" }} />
-        </IconButton>
-      </form>
-      <Scrollbars
-        renderThumbVertical={renderThumb}
-        style={{
-          maxHeight: "50%",
-          marginLeft: "-22px",
-
-          marginTop: "2.5rem",
-        }}
-      >
-        <List>
-          {tasks &&
-            tasks
-              .sort(compare)
-              .map((task, index) => (
-                <Task
-                  key={index}
-                  task={task}
-                  toggleCheck={toggleCheck}
-                  deleteTask={deleteTask}
-                  editTask={editTask}
-                  onFinishEditing={finishEditingTask}
-                />
-              ))}
-        </List>
-      </Scrollbars>
-    </>
-  );
-};
-
-export default ToDo;
+export default function ToDo() {
+  const [tasks, setTasks, storageError] = useStoredList(`${process.env.REACT_APP_NAMESPACE || 'rocket-coder'}-tasks`, 'undefined-tasks');
+  const [text, setText] = useState('');
+  function addTask(event) {
+    event.preventDefault();
+    if (!text.trim()) return;
+    setTasks(previous => [{id: `${Date.now()}-${Math.random().toString(36).slice(2)}`, text: text.trim(), checked: false}, ...previous]);
+    setText('');
+  }
+  function updateTask(id, changes) {
+    setTasks(previous => previous.map(task => task.id === id ? {...task, ...changes} : task));
+  }
+  const completed = tasks.filter(task => task.checked).length;
+  return <section className="tasks-panel" aria-labelledby="tasks-heading">
+    <div className="panel-heading"><h2 id="tasks-heading">Today’s mission</h2><span>{completed}/{tasks.length} complete</span></div>
+    <form onSubmit={addTask} className="task-form"><label className="sr-only" htmlFor="new-task">New task</label><input id="new-task" value={text} onChange={event => setText(event.target.value)} maxLength={240} placeholder="What would you like to get done?" /><button type="submit" disabled={!text.trim()}>Add task <span aria-hidden="true">+</span></button></form>
+    {storageError && <p role="status" className="muted">Browser storage is unavailable. Changes will last for this session.</p>}
+    {tasks.length ? <ul className="task-list">{tasks.map(task => <Task key={task.id} task={task} onUpdate={changes => updateTask(task.id, changes)} onDelete={() => setTasks(previous => previous.filter(item => item.id !== task.id))} />)}</ul> : <div className="empty-state"><span aria-hidden="true">✦</span><p>A little space for your next big thing.</p><small>Add a task to begin your mission.</small></div>}
+  </section>;
+}

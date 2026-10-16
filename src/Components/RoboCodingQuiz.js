@@ -1,143 +1,18 @@
-import React, { useState } from "react";
-import Quiz from "react-quiz-component";
-import { quiz1 } from "./quiz1";
-import Robot from "./Robot.jpeg";
-import Box from "@material-ui/core/Box";
-import { makeStyles } from "@material-ui/core/styles";
-
-import MenuItem from "@material-ui/core/MenuItem";
-import FormControl from "@material-ui/core/FormControl";
-import Select from "@material-ui/core/Select";
-import Button from "@material-ui/core/Button";
-
-const useStyles = makeStyles((theme) => ({
-  button: {
-    display: "block",
-    marginTop: theme.spacing(2),
-  },
-  formControl: {
-    margin: theme.spacing(1),
-    minWidth: 120,
-  },
-  box: {
-    display: "flex",
-    flexDirection: "column",
-    width: "40%",
-    marginLeft: "12%",
-  },
-  againBtn: {
-    display: "flex",
-    justifyContent: "flex-start",
-    color: "#00FF41",
-    paddingLeft: "0",
-  },
-}));
+import React, {useState} from 'react';
+import {quiz1} from './quiz1';
 
 export default function RoboCodingQuiz() {
-  const classes = useStyles();
-  const [quiz, setQuiz] = React.useState(quiz1);
-  const [open, setOpen] = React.useState(false);
-  const [value, setValue] = React.useState();
-  const [playAgainBtn, setPlayAgainBtn] = useState(false);
-
-  const handleChange = (e) => {
-    console.log(e);
-    setValue(e.target.value);
-
-    const arbitraryNrOfQuestions = {
-      ...quiz1,
-      questions: quiz1.questions.slice(0, e.target.value),
-    };
-    console.log({ arbitraryNrOfQuestions });
-    setQuiz(arbitraryNrOfQuestions);
-    // console.log(quiz);
-  };
-
-  const onQuizEnd = () => {
-    setPlayAgainBtn(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  const handleOpen = () => {
-    setOpen(true);
-  };
-
-  const refreshPage = () => {
-    window.location.reload();
-  };
-
-  return (
-    <div
-      className="background"
-      style={{
-        background: ` url(${Robot}`,
-        backgroundPosition: "top",
-        backgroundSize: "cover",
-        backgroundRepeat: "no-repeat",
-        height: "100vh",
-      }}
-    >
-      <div>
-        <Box className={classes.box}>
-          <h4 style={{ marginTop: "20px" }}>Welcome to the RoboQuiz</h4>
-          <br />
-          <h5>
-            This quiz is designed for you to refresh your coding skills and help
-            you on your journey to becoming a Rocket Coder 🚀
-          </h5>
-          {playAgainBtn && (
-            <>
-              <Button className={classes.againBtn} onClick={refreshPage}>
-                Play Again ↺
-              </Button>
-            </>
-          )}
-        </Box>
-        {!value && (
-          <FormControl
-            className={classes.formControl}
-            style={{ marginLeft: "200px" }}
-          >
-            <p>Choose number of questions:</p>
-            <Select
-              labelId="demo-controlled-open-select-label"
-              id="demo-controlled-open-select"
-              open={open}
-              onClose={handleClose}
-              onOpen={handleOpen}
-              value={value}
-              onChange={handleChange}
-              name="select"
-              style={{ width: "50%" }}
-            >
-              <MenuItem value={3}>Three</MenuItem>
-              <MenuItem value={5}>Five</MenuItem>
-              <MenuItem value={10}>Ten</MenuItem>
-              <MenuItem value={15}>Fifteen</MenuItem>
-            </Select>
-          </FormControl>
-        )}
-      </div>
-      <div
-        className="quizes"
-        style={{
-          marginLeft: "180px",
-          marginTop: "0px",
-        }}
-      >
-        {value && quiz && (
-          <Quiz
-            quiz={quiz}
-            shuffle={true}
-            showDefaultResult={true}
-            showInstantFeedback={true}
-            onComplete={onQuizEnd}
-          />
-        )}
-      </div>
-    </div>
-  );
+  const [count, setCount] = useState(5);
+  const [started, setStarted] = useState(false);
+  const [position, setPosition] = useState(0);
+  const [selected, setSelected] = useState([]);
+  const [checked, setChecked] = useState(false);
+  const [score, setScore] = useState(0);
+  const questions = quiz1.questions.slice(0, count);
+  const done = started && position >= questions.length;
+  const question = questions[position];
+  const correctAnswers = question ? (Array.isArray(question.correctAnswer) ? question.correctAnswer : [question.correctAnswer]).map(Number) : [];
+  const correct = selected.length === correctAnswers.length && selected.every(answer => correctAnswers.includes(answer));
+  function restart() {setStarted(false); setPosition(0); setSelected([]); setChecked(false); setScore(0);}
+  return <section className="tool-page quiz-page"><p className="eyebrow">STAY CURIOUS, CODER</p><h1>Robo coding quiz<span className="accent">.</span></h1><p className="page-intro">A small workout for your React knowledge. No pressure, just practice.</p><div className="surface quiz-panel">{!started ? <><h2>Ready for a quick challenge?</h2><p className="muted">Choose a session. You’ll get feedback after each answer.</p><label htmlFor="question-count">Number of questions</label><select id="question-count" value={count} onChange={event => setCount(Number(event.target.value))}>{[3, 5, 10, 15].filter(number => number <= quiz1.questions.length).map(number => <option key={number} value={number}>{number} questions</option>)}</select><button onClick={() => setStarted(true)}>Start quiz</button></> : done ? <><p className="eyebrow">MISSION COMPLETE</p><h2>You scored {score} out of {questions.length}.</h2><p>Every question is a chance to learn something.</p><button onClick={restart}>Try another session</button></> : <><div className="panel-heading"><span>Question {position + 1} of {questions.length}</span><span>{score} correct</span></div><progress value={position} max={questions.length} aria-label="Quiz progress" /><h2>{question.question}</h2><p className="muted">{question.answerSelectionType === 'multiple' ? 'Select all that apply.' : 'Choose one answer.'}</p><fieldset disabled={checked}><legend className="sr-only">Answer options</legend>{question.answers.map((answer, index) => <label className={`quiz-answer${selected.includes(index + 1) ? ' selected' : ''}`} key={index}><input type={question.answerSelectionType === 'multiple' ? 'checkbox' : 'radio'} name="quiz-answer" checked={selected.includes(index + 1)} onChange={() => setSelected(previous => question.answerSelectionType === 'multiple' ? previous.includes(index + 1) ? previous.filter(value => value !== index + 1) : [...previous, index + 1] : [index + 1])} /><span>{answer}</span></label>)}</fieldset>{checked ? <><div className="quiz-feedback" role="status"><strong>{correct ? 'That’s right!' : 'Not quite. Keep going!'}</strong>{!correct && <p>Correct answer: {correctAnswers.map(value => question.answers[value - 1]).join('; ')}</p>}{question.explanation && <p>{question.explanation}</p>}</div><button onClick={() => {setPosition(previous => previous + 1); setSelected([]); setChecked(false);}}>{position + 1 === questions.length ? 'See my result' : 'Next question'}</button></> : <button disabled={!selected.length} onClick={() => {setChecked(true); if (correct) setScore(previous => previous + 1);}}>Check answer</button>}<button className="text-button" onClick={restart}>Restart quiz</button></>}</div></section>;
 }

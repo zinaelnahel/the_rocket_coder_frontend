@@ -1,70 +1,42 @@
-# Getting Started with Create React App
+# The Rocket Coder
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A responsive coding launchpad with daily tasks, a focus timer, a debugging companion, a coding quiz and a shortcut notebook. Originally built by Gulden, Zina and Claudia; original contributor credits and assets are preserved.
 
-## Available Scripts
+## Run locally
 
-In the project directory, you can run:
+Use Node.js 22 and npm:
 
-### `npm start`
+```sh
+npm install --legacy-peer-deps
+npm start
+```
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+To use another port in PowerShell:
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+```powershell
+$env:PORT = '3001'
+npm start
+```
 
-### `npm test`
+```sh
+npm test -- --watchAll=false --runInBand
+npm run build
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+The legacy build tooling needs the OpenSSL compatibility flag, already included in the start/build scripts. The dependency/tooling migration is a separate follow-up; the original dependency set is retained for this initial UI and reliability cleanup.
 
-### `npm run build`
+## Local behaviour
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- Tasks support add, complete, edit and delete. Browser storage persists the empty list too, so deleted tasks stay deleted.
+- Shortcuts support physical keyboard capture and touch buttons. They are notes, not operating-system shortcut bindings.
+- The timer uses a deadline so elapsed time stays accurate when browser interval callbacks are delayed. Audio playback depends on browser permissions; silent completion always works.
+- The debugger supports text, optional browser voice recognition, a guided checklist and explicit links to external searches. Voice input may use the browser vendor's speech service. The original Heroku search backend has not been cloned or verified, and this version does not pretend to return its results.
+- The homepage uses local illustrated space artwork and works without external API keys. Ambient audio is generated in the browser, with an optional link to the official SomaFM radio player.
+- The credits video autoplays muted, loops and plays inline. Viewers can enable sound with the video controls.
+- The original project assets and legacy components remain in the repository for reference. Active routes use the cleaned components.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Tasks saved without an original namespace are migrated from `undefined-tasks`. Set `REACT_APP_NAMESPACE` to your previous configured value to retain other existing task stores. Browser storage is specific to each origin (host and port).
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Responsive layout
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Fluid grids replace fixed desktop positions. Navigation collapses on smaller screens, form controls use readable text and touch-sized targets, and the tools stack on phone screens. Test at 320, 390, 768 and 1440 CSS pixels.

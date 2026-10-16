@@ -1,123 +1,15 @@
-// here go the credits of all the things used in the project
+import React, {useState} from 'react';
+import guelden from './guelden.png';
+import zina from './zina.png';
+import claudia from './claudia.png';
+import video from './video.mp4';
 
-// alien gif https://bestanimations.com/gifs/Little-Gray-Extraterrestrial-Alien-Face.html
-
-import React from "react";
-
-import "./styles.css";
-// Import the necessary styles, or include them another way with your build process
-import guelden from "../Components/guelden.png";
-import zina from "../Components/zina.png";
-import video from "../Components/video.mp4";
-import claudia from "../Components/claudia.png";
+const crew = [
+  {name: 'Gülden', image: guelden, github: 'https://github.com/GueldenBayar', linkedin: 'https://www.linkedin.com/in/gülden-bayar-705962218'},
+  {name: 'Zina', image: zina, github: 'https://github.com/zinaelnahel', linkedin: 'https://www.linkedin.com/in/zina-el-nahel/'},
+  {name: 'Claudia', image: claudia, github: 'https://github.com/claurennt', linkedin: 'https://www.linkedin.com/in/hello-world-claudia-here/'},
+];
 export default function Credits() {
-  return (
-    <>
-      <h2 style={{ textAlign: "center", padding: "10px" }}>
-        The Rocket Coder 🚀 was coded 👩🏻‍💻 by :
-      </h2>
-      <div>
-        <div class="team">
-          <div class="card">
-            <div class="circle-container">
-              <img src={guelden} alt="" width="255px" height="260px" />
-            </div>
-            <h2>Gülden</h2>
-            <ul className="credits-list">
-              <li>
-                {" "}
-                <a
-                  className="github"
-                  href="https://www.linkedin.com/mwlite/in/gülden-bayar-705962218"
-                >
-                  Linkedin
-                </a>
-              </li>
-              <li>
-                {" "}
-                <a className="github" href="https://github.com/GueldenBayar">
-                  GitHub
-                </a>
-              </li>
-            </ul>
-          </div>
-          <div class="card">
-            <div class="circle-container">
-              <img src={zina} alt="" width="255px" height="260px" />
-            </div>
-            <h2>Zina</h2>
-            <ul className="credits-list">
-              <li>
-                {" "}
-                <a
-                  className="github"
-                  href="https://de.linkedin.com/in/zina-el-nahel"
-                >
-                  Linkedin
-                </a>
-              </li>
-              <li>
-                <a className="github" href="https://github.com/zinaelnahel">
-                  GitHub
-                </a>
-              </li>
-            </ul>
-          </div>
-          <div class="card">
-            <div class="circle-container">
-              <img src={claudia} alt="" width="255px" height="260px" />
-            </div>
-            <h2>Claudia</h2>
-
-            <ul className="credits-list">
-              <li>
-                <a
-                  className="github"
-                  href="https://www.linkedin.com/in/hello-world-claudia-here/"
-                >
-                  Linkedin
-                </a>
-              </li>
-              <li>
-                {" "}
-                <a className="github" href="https://github.com/claurennt">
-                  GitHub
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div></div>
-        <video
-          src={video}
-          width="1000"
-          height="500"
-          autoplay="autoplay"
-          controls="controls"
-          style={{ marginLeft: "200px" }}
-        ></video>
-        {/* <div
-          style={{
-            position: "absolute",
-            fontFamily: "'Pathway Gothic One', sans-serif",
-          }}
-        >
-          <h1> Hiiiii </h1>
-        </div> */}
-        {/* <div
-          style={{ height: "510px", marginTop: "200px", position: "absolute" }}
-        > */}
-
-        {/* </div> */}
-
-        {/* <div style={{ maxHeight: "100px", position: "relative" }}>
-          <Crawl
-            title="Episode IV"
-            subTitle="A New Hope"
-            text="It is a period of civil war. Rebel spaceships, striking from a hidden base, have won their first victory against the evil Galactic Empire. During the battle, Rebel spies managed to steal secret plans to the Empire’s ultimate weapon, the DEATH STAR, an armored space station with enough power to destroy an entire planet. Pursued by the Empire’s sinister agents, Princess Leia races home aboard her starship, custodian of the stolen plans that can save her people and restore freedom to the galaxy…"
-          />
-        </div> */}
-      </div>
-    </>
-  );
+  const [videoError, setVideoError] = useState(false);
+  return <section className="tool-page"><p className="eyebrow">BUILT TOGETHER</p><h1>Meet the crew<span className="accent">.</span></h1><p className="page-intro">Three curious coders. One little corner of the universe.</p><div className="crew-grid">{crew.map(person => <article className="surface crew-card" key={person.name}><img src={person.image} alt={person.name} width="180" height="180" /><h2>{person.name}</h2><div className="resource-links"><a href={person.github} target="_blank" rel="noopener noreferrer">GitHub ↗</a><a href={person.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn ↗</a></div></article>)}</div>{videoError ? <p className="video-fallback" role="status">The original crew video cannot play in this browser. You can still meet the team through the profiles above.</p> : <video className="crew-video" src={video} autoPlay muted loop playsInline controls preload="auto" onError={() => setVideoError(true)} aria-label="The Rocket Coder project video" />}<p className="muted">Alien animation: <a href="https://bestanimations.com/gifs/Little-Gray-Extraterrestrial-Alien-Face.html" target="_blank" rel="noopener noreferrer">Best Animations ↗</a>.</p></section>;
 }

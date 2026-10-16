@@ -1,54 +1,17 @@
-import { useEffect, useState } from "react";
-import { differenceInHours, parseISO } from "date-fns";
+import {useEffect, useState} from 'react';
 
-const { REACT_APP_NAMESPACE, REACT_APP_NASA_KEY } = process.env;
-
-const useNasaPicture = () => {
-  const [picOfTheDay, setPicOfTheDay] = useState();
-
+export default function useNasaPicture() {
+  const [picOfTheDay, setPicOfTheDay] = useState(null);
   useEffect(() => {
-    const getImage = () => {
-      fetch(
-        `https://api.nasa.gov/planetary/apod?api_key=${REACT_APP_NASA_KEY}&start_date=2021-05-08&end_date=2021-05-23`
-      )
-        .then((response) => response.json())
-        .then((data) => {
-          const randomImageData = data[Math.floor(Math.random() * data.length)];
-          const dataToStore = {
-            imgUrl: randomImageData.url,
-            imgTitle: randomImageData.title,
-            imgCopyright: randomImageData.copyright,
-            dateOfArrival: new Date(),
-          };
-          localStorage.setItem(
-            REACT_APP_NAMESPACE,
-            JSON.stringify(dataToStore)
-          );
-          setPicOfTheDay(dataToStore);
-        });
-    };
-
-    const retrievedData = localStorage.getItem(REACT_APP_NAMESPACE);
-
-    if (!retrievedData) {
-      getImage();
-    }
-
-    if (retrievedData) {
-      const now = new Date();
-      const userData = JSON.parse(retrievedData);
-      const difference = differenceInHours(
-        now,
-        parseISO(userData.dateOfArrival)
-      );
-      setPicOfTheDay(userData);
-      if (difference >= 24) {
-        getImage();
-      }
-    }
+    if (!process.env.REACT_APP_NASA_KEY) return;
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 8000);
+    fetch(`https://api.nasa.gov/planetary/apod?api_key=${encodeURIComponent(process.env.REACT_APP_NASA_KEY)}`, {signal: controller.signal})
+      .then(response => {if (!response.ok) throw new Error('Image unavailable'); return response.json();})
+      .then(data => {if (!controller.signal.aborted && data.media_type === 'image' && /^https:\/\//.test(data.url)) setPicOfTheDay({imgUrl: data.url, imgTitle: data.title, imgCopyright: data.copyright});})
+      .catch(() => {})
+      .finally(() => clearTimeout(timeout));
+    return () => {clearTimeout(timeout); controller.abort();};
   }, []);
-
-  return { picOfTheDay };
-};
-
-export default useNasaPicture;
+  return {picOfTheDay};
+}
